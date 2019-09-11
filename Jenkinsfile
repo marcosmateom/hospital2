@@ -1,45 +1,48 @@
-pipeline{
-    agent any
-    stages {  
-        /*stage('first') {
-            agent { label 'master' }
-            steps {
-            sh "printenv | sort"
-            }
-        }*/       
-        stage('--- clean ---') {
-            steps{
-                withEnv(["PATH+MAVEN=${tool 'Maven'}/bin:JAVA_HOME/bin"]) {
-                    sh "mvn clean"
-                }
-            }
-        }
-        stage('-- package --') {
-            steps {
-                withEnv(["PATH+MAVEN=${tool 'Maven'}/bin:JAVA_HOME/bin"]) {
-                    sh "mvn package"
-                }
-            }
-        }
-        stage('-- sonar --') {
-            steps {
-                withEnv(["PATH+MAVEN=${tool 'Maven'}/bin:JAVA_HOME/bin","PATH+NODE=${tool 'Node'}/bin"]) {
-                    sh "mvn sonar:sonar -Dsonar.jdbc.url=jdbc:h2:tcp://172.16.72.12:9000/sonar -Dsonar.host.url=http://172.16.72.12:9000"
-                }
-            }
-        }
-       
-    }
-    post {
-        success {
-            emailext to: 'gonzalez161256@unis.edu.gt',
-            subject: "Finished Pipeline: ${currentBuild.fullDisplayName} - Success",
-            body: "The build was successfull with ${env.BUILD_URL}"
-        }
-        failure {
-            emailext to: 'gonzalez161256@unis.edu.gt,jflores@unis.edu.gt',
-            subject: "Finished Pipeline: ${currentBuild.fullDisplayName} - Failure",
-            body: "There was a problem with ${env.BUILD_URL}"
-        }
-    }
+// Powered by Infostretch 
+
+timestamps {
+
+node () {
+
+	stage ('tets - Checkout') {
+ 	 checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '', url: 'https://github.com/marcosmateom/hospital2.git']]]) 
+	}
+	stage ('tets - Build') {
+ 	
+// Unable to convert a build step referring to "hudson.plugins.timestamper.TimestamperBuildWrapper". Please verify and convert manually if required.
+// Unable to convert a build step referring to "hudson.plugins.sonar.SonarBuildWrapper". Please verify and convert manually if required.		// Maven build step
+	withEnv(["PATH+MAVEN=${tool 'M3'}/bin:JAVA_HOME/bin"]) { 
+ 			if(isUnix()) {
+ 				sh "mvn clean " 
+			} else { 
+ 				bat "mvn clean " 
+			} 
+ 		}		// Maven build step
+	withEnv(["PATH+MAVEN=${tool 'M3'}/bin:JAVA_HOME/bin"]) { 
+ 			if(isUnix()) {
+ 				sh "mvn package " 
+			} else { 
+ 				bat "mvn package " 
+			} 
+ 		}		// Maven build step
+	withEnv(["PATH+MAVEN=${tool 'M3'}/bin:JAVA_HOME/bin"]) { 
+ 			if(isUnix()) {
+ 				sh "mvn sonar:sonar -Dsonar.jdbc.url=jdbc:h2:tcp://192.168.99.100:9000/sonar -Dsonar.host.url=http://192.168.99.100:9000 " 
+			} else { 
+ 				bat "mvn sonar:sonar -Dsonar.jdbc.url=jdbc:h2:tcp://192.168.99.100:9000/sonar -Dsonar.host.url=http://192.168.99.100:9000 " 
+			} 
+ 		} 
+	}
+	stage ('tets - Post build actions') {
+/*
+Please note this is a direct conversion of post-build actions. 
+It may not necessarily work/behave in the same way as post-build actions work.
+A logic review is suggested.
+*/
+		// Mailer notification
+		step([$class: 'Mailer', notifyEveryUnstableBuild: true, recipients: 'marcosmateom@gmail.com', sendToIndividuals: false])
+
+// Unable to convert a post-build action referring to "hudson.plugins.emailext.ExtendedEmailPublisher". Please verify and convert manually if required. 
+	}
+}
 }
