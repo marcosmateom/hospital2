@@ -140,6 +140,8 @@
                 </executions>
             </plugin>
         </plugins>
+        
+        <finalName>proyectoDB2-Hospital1</finalName>
     </build>
 
 </project>
