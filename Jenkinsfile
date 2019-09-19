@@ -42,7 +42,7 @@ pipeline {
          }  
          success {  
              echo 'This will run only if successful' 
-             deploy adapters: [tomcat8(credentialsId: 'admintom', path: '', url: 'http://192.168.99.100:8888/')], contextPath: null, war: 'hospi2.war'
+             deploy adapters: [tomcat8(credentialsId: 'admintom', path: '', url: 'http://192.168.99.100:8888/')], contextPath: null, war: 'proyectoDB2-Hospital1-1.0-SNAPSHOT.war'
          }  
          failure {  
              echo 'This will run only if FAILS'
