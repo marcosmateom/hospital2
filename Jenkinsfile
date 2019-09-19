@@ -41,7 +41,8 @@ pipeline {
              echo 'This will always run'  
          }  
          success {  
-             echo 'This will run only if successful'  
+             echo 'This will run only if successful' 
+             deploy adapters: [tomcat8(credentialsId: 'admintom', path: '', url: 'http://192.168.99.100:8888/')], contextPath: null, war: 'hospi2.war'
          }  
          failure {  
              echo 'This will run only if FAILS'
