@@ -24,8 +24,8 @@ pipeline {
         }
         stage('Examinar con SonarQube') {
             steps {
-                //echo 'Estoy en sonar'
-                sh 'mvn sonar:sonar -Dsonar.jdbc.url=jdbc:h2:tcp://192.168.99.100:9000/sonar -Dsonar.host.url=http://192.168.99.100:9000'
+                echo 'Estoy en sonar'
+                //sh 'mvn sonar:sonar -Dsonar.jdbc.url=jdbc:h2:tcp://192.168.99.100:9000/sonar -Dsonar.host.url=http://192.168.99.100:9000'
                 
             }
         }
@@ -42,7 +42,7 @@ pipeline {
          }  
          success {  
              echo 'This will run only if successful' 
-             deploy adapters: [tomcat8(credentialsId: 'admintom', path: '', url: 'http://192.168.99.100:8888/')], contextPath: null, war: 'proyectoDB2-Hospital1-1.0-SNAPSHOT.war'
+             deploy adapters: [tomcat8(credentialsId: 'admintom', path: '', url: 'http://192.168.99.100:8888/')], contextPath: '/var/jenkins_home/workspace/prueba24_master/target/', war: 'proyectoDB2-Hospital1-1.0-SNAPSHOT.war'
          }  
          failure {  
              echo 'This will run only if FAILS'
