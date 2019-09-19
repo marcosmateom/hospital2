@@ -32,7 +32,7 @@ pipeline {
         stage('Proximo paso'){
             steps{
                 echo 'aqui se pone el proximo paso'
-                deploy adapters: [tomcat8(credentialsId: 'admintom', path: '', url: 'http://192.168.99.100:8888/')], contextPath: '/var/jenkins_home/workspace/prueba24_master/target/', war: 'proyectoDB2-Hospital1-1.0-SNAPSHOT.war'
+                //deploy adapters: [tomcat8(credentialsId: 'admintom', path: '', url: 'http://192.168.99.100:8888/')], contextPath: '/var/jenkins_home/workspace/prueba24_master/target/', war: 'proyectoDB2-Hospital1-1.0-SNAPSHOT.war'
             }
         }
     }
@@ -42,7 +42,7 @@ pipeline {
          }  
          success {  
              echo 'This will run only if successful' 
-             //deploy adapters: [tomcat8(credentialsId: 'admintom', path: '', url: 'http://192.168.99.100:8888/')], contextPath: '/var/jenkins_home/workspace/prueba24_master/target/', war: 'proyectoDB2-Hospital1-1.0-SNAPSHOT.war'
+             deploy adapters: [tomcat8(credentialsId: 'admintom', path: '', url: 'http://192.168.99.100:8888/')], contextPath: null, war: 'target/proyectoDB2-Hospital1-1.0-SNAPSHOT.war'
          }  
          failure {  
              echo 'This will run only if FAILS'
