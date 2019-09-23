@@ -12,8 +12,8 @@ $(document).ready(
         function() {
             $.ajax({
                 type: 'GET',
-                //url: 'http://localhost:8080/proyectoDB2/restC/cliente/getCliente',
-                url: 'http://localhost:8080/proyectoDB2-Hospital1/GetCliente',
+                //url: 'http://localhost/proyectoDB2/restC/cliente/getCliente',
+                url: 'http://localhost/proyectoDB2-Hospital1/GetCliente',
                 dataType: 'json',
                 data: { 
                     dpi: query_string('dpi') 

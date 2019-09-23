@@ -40,9 +40,9 @@ public class GetPatient extends HttpServlet {
             String parPId = request.getParameter("pId");
             if ((parPId != null) && !(parPId.equals(""))) {
                 int pId = Integer.parseInt(request.getParameter("pId"));
-                url = "http://localhost:8080/proyectoDB2-Hospital1/restP/patient/getPatient?pId=" + pId;
+                url = "http://localhost/proyectoDB2-Hospital1/restP/patient/getPatient?pId=" + pId;
             } else {
-                url = "http://localhost:8080/proyectoDB2-Hospital1/restP/patient/getPatient";
+                url = "http://localhost/proyectoDB2-Hospital1/restP/patient/getPatient";
             }
             URL obj = new URL(url);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
