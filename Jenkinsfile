@@ -1,52 +1,58 @@
-pipeline{
+pipeline {
     agent any
-    stages {  
-        /*stage('first') {
-            agent { label 'master' }
+    tools {
+        maven 'M3'
+        jdk 'JDK8'
+    }
+    stages {
+        stage('Obtener proyecto de GIT') {
             steps {
-            sh "printenv | sort"
+                git 'https://github.com/marcosmateom/hospital2.git'
             }
-        }*/       
-        stage('--- clean ---') {
+        }
+        stage('Clean') {
+            steps {
+                sh 'mvn clean'
+            }
+        }
+        stage('Build') {
+            steps {
+                //sh 'mvn package'
+                sh 'mvn install'
+                
+            }
+        }
+        stage('Examinar con SonarQube') {
+            steps {
+                //echo 'Estoy en sonar'
+                sh 'mvn sonar:sonar -Dsonar.jdbc.url=jdbc:h2:tcp://192.168.99.100:9000/sonar -Dsonar.host.url=http://192.168.99.100:9000'
+                
+            }
+        }
+        stage('Proximo paso'){
             steps{
-                withEnv(["PATH+MAVEN=${tool 'Maven'}/bin:JAVA_HOME/bin"]) {
-                    sh "mvn clean"
-                }
+                echo 'aqui se pone el proximo paso'
+                //deploy adapters: [tomcat8(credentialsId: 'admintom', path: '', url: 'http://192.168.99.100:8888/')], contextPath: '/var/jenkins_home/workspace/prueba24_master/target/', war: 'proyectoDB2-Hospital1-1.0-SNAPSHOT.war'
             }
-        }
-        stage('-- package --') {
-            steps {
-                withEnv(["PATH+MAVEN=${tool 'Maven'}/bin:JAVA_HOME/bin"]) {
-                    sh "mvn package"
-                }
-            }
-        }
-        stage('-- Unit Test --') {
-            steps {
-                withEnv(["PATH+MAVEN=${tool 'Maven'}/bin:JAVA_HOME/bin"]) {
-                    sh "mvn -Dtest=gio.co.hospitales.GetUsuarioTest test"
-                }
-            }
-        }
-        stage('-- sonar --') {
-            steps {
-                withEnv(["PATH+MAVEN=${tool 'Maven'}/bin:JAVA_HOME/bin","PATH+NODE=${tool 'Node'}/bin"]) {
-                    sh "mvn sonar:sonar -Dsonar.jdbc.url=jdbc:h2:tcp://172.16.72.12:9000/sonar -Dsonar.host.url=http://172.16.72.12:9000"
-                }
-            }
-        }
-       
-    }
-    post {
-        success {
-            emailext to: 'gonzalez161256@unis.edu.gt',
-            subject: "Finished Pipeline: ${currentBuild.fullDisplayName} - Success",
-            body: "The build was successfull with ${env.BUILD_URL}"
-        }
-        failure {
-            emailext to: 'gonzalez161256@unis.edu.gt,jflores@unis.edu.gt',
-            subject: "Finished Pipeline: ${currentBuild.fullDisplayName} - Failure",
-            body: "There was a problem with ${env.BUILD_URL}"
         }
     }
+    post {  
+         always {  
+             echo 'This will always run'  
+         }  
+         success {  
+             echo 'This will run only if successful' 
+             deploy adapters: [tomcat8(credentialsId: 'admintom', path: '', url: 'http://192.168.99.100:8888/')], contextPath: null, war: 'target/proyectoDB2-Hospital1.war'
+         }  
+         failure {  
+             echo 'This will run only if FAILS'
+         }  
+         unstable {  
+             echo 'This will run only if the run was marked as unstable'  
+         }  
+         changed {  
+             echo 'This will run only if the state of the Pipeline has changed'  
+             echo 'For example, if the Pipeline was previously failing but is now successful'  
+         }  
+     } 
 }
