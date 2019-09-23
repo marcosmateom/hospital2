@@ -32,7 +32,7 @@ pipeline {
         stage('Proximo paso'){
             steps{
                 echo 'aqui se pone el proximo paso'
-                //sh ''
+                //deploy adapters: [tomcat8(credentialsId: 'admintom', path: '', url: 'http://192.168.99.100:8888/')], contextPath: '/var/jenkins_home/workspace/prueba24_master/target/', war: 'proyectoDB2-Hospital1-1.0-SNAPSHOT.war'
             }
         }
     }
@@ -41,10 +41,11 @@ pipeline {
              echo 'This will always run'  
          }  
          success {  
-             echo 'This will run only if successful'  
+             echo 'This will run only if successful' 
+             deploy adapters: [tomcat8(credentialsId: 'admintom', path: '', url: 'http://192.168.99.100:8888/')], contextPath: null, war: 'target/proyectoDB2-Hospital1.war'
          }  
          failure {  
-             mail bcc: '', body: "<b>Example</b><br>Project: ${env.JOB_NAME} <br>Build Number: ${env.BUILD_NUMBER} <br> URL de build: ${env.BUILD_URL}", cc: '', charset: 'UTF-8', from: '', mimeType: 'text/html', replyTo: '', subject: "ERROR CI: Project name -> ${env.JOB_NAME}", to: "foo@foomail.com";  
+             echo 'This will run only if FAILS'
          }  
          unstable {  
              echo 'This will run only if the run was marked as unstable'  
