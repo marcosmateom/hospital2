@@ -1,5 +1,3 @@
-def deplo = "false"
-
 pipeline {
     agent any
     tools {
