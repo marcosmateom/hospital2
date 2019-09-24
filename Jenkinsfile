@@ -29,16 +29,21 @@ pipeline {
                 
             }
         }
-        stage("Quality Gate"){
+        stage("Quality Gate") {
             steps {
-                  timeout(time: 1, unit: 'HOURS') {
-                      def qg = waitForQualityGate()
-                      if (qg.status != 'OK') {
-                          error "Pipeline aborted due to quality gate failure: ${qg.status}"
-                      }
-                  }
+                timeout(time: 10, unit: 'MINUTES') {
+                    //waitForQualityGate abortPipeline: true
+                    script {
+                        def qg = waitForQualityGate()
+                        gpError = qg.status
+                        if (qg.status != 'OK') {
+                            error "Pipeline aborted due to a quality gate failure: ${qg.status}"
+                        }
+                        failure_stage=env.STAGE_NAME
+                    }
+                }
             }
-       }   
+        }   
         stage('deploy if dev'){
             when {
                 branch 'dev'
