@@ -25,25 +25,18 @@ pipeline {
         stage('Examinar con SonarQube') {
             steps {
                 echo 'Estoy en sonar'
+                withSonarQubeEnv('My SonarQube Server') {
                 sh 'mvn sonar:sonar -Dsonar.jdbc.url=jdbc:h2:tcp://192.168.99.100:9000/sonar -Dsonar.host.url=http://192.168.99.100:9000'
-                
+              }    
             }
         }
         stage("Quality Gate") {
             steps {
-                timeout(time: 10, unit: 'MINUTES') {
-                    //waitForQualityGate abortPipeline: true
-                    script {
-                        def qg = waitForQualityGate()
-                        gpError = qg.status
-                        if (qg.status != 'OK') {
-                            error "Pipeline aborted due to a quality gate failure: ${qg.status}"
-                        }
-                        failure_stage=env.STAGE_NAME
-                    }
-                }
+              timeout(time: 1, unit: 'HOURS') {
+                waitForQualityGate abortPipeline: true
+              }
             }
-        }   
+          }   
         stage('deploy if dev'){
             when {
                 branch 'dev'
