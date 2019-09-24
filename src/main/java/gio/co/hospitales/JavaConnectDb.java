@@ -19,19 +19,19 @@ public class JavaConnectDb {
             Class.forName("oracle.jdbc.driver.OracleDriver");
             switch (numHospital) {
                 case 1:
-                    conn = DriverManager.getConnection("jdbc:oracle:thin:@192.168.1.3:1521:ORCL18", "c##hospital1", "admin");
+                    conn = DriverManager.getConnection("jdbc:oracle:thin:@25.14.71.30:1521:ORCL18", "c##hospital1", "admin");
                     break;
                 case 2:
                     //conexion del abue
-                    conn = DriverManager.getConnection("jdbc:oracle:thin:@192.168.1.3:1521:ORCL18", "c##hospital1", "admin");
+                    conn = DriverManager.getConnection("jdbc:oracle:thin:@25.14.71.30:1521:ORCL18", "c##hospital1", "admin");
                     break;
                 case 3:
                     //conexion de manu
-                    conn = DriverManager.getConnection("jdbc:oracle:thin:@192.168.1.3:1521:ORCL18", "c##hospital1", "admin");
+                    conn = DriverManager.getConnection("jdbc:oracle:thin:@25.14.71.30:1521:ORCL18", "c##hospital1", "admin");
                     break;
                 default:
                     //por defecto es al hospital 1
-                    conn = DriverManager.getConnection("jdbc:oracle:thin:@192.168.1.3:1521:ORCL18", "c##hospital1", "admin");
+                    conn = DriverManager.getConnection("jdbc:oracle:thin:@25.14.71.30:1521:ORCL18", "c##hospital1", "admin");
                     break;
             }
         } catch (Exception e) {
