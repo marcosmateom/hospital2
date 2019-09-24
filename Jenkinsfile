@@ -35,7 +35,7 @@ pipeline {
             }
             steps{
                 
-                deploy adapters: [tomcat8(credentialsId: 'admintom', path: '', url: 'http://192.168.99.100:8888/')], contextPath: '/var/jenkins_home/workspace/prueba24_master/target/', war: 'proyectoDB2-Hospital1-1.0-SNAPSHOT.war'
+                params.Deploy == 'true'
             }
         }
     }
@@ -44,8 +44,12 @@ pipeline {
              echo 'This will always run'  
          }  
          success {  
+             script {
+                  if (params.Deploy == 'true') {
+                    deploy adapters: [tomcat8(credentialsId: 'admintom', path: '', url: 'http://192.168.99.100:8888/')], contextPath: null, war: 'target/proyectoDB2-Hospital1.war'
+                  }
+                }
              echo 'This will run only if successful' 
-             //deploy adapters: [tomcat8(credentialsId: 'admintom', path: '', url: 'http://192.168.99.100:8888/')], contextPath: null, war: 'target/proyectoDB2-Hospital1.war'
          }  
          failure {  
              echo 'This will run only if FAILS'
