@@ -1,3 +1,5 @@
+def deplo = "false"
+
 pipeline {
     agent any
     tools {
@@ -35,7 +37,7 @@ pipeline {
             }
             steps{
                 
-                Deployar == 'true'
+                deplo == "true"
             }
         }
     }
@@ -45,7 +47,7 @@ pipeline {
          }  
          success {  
              script {
-                  if (Deployar == 'true') {
+                  if (deplo == "true") {
                     deploy adapters: [tomcat8(credentialsId: 'admintom', path: '', url: 'http://192.168.99.100:8888/')], contextPath: null, war: 'target/proyectoDB2-Hospital1.war'
                   }
                 }
