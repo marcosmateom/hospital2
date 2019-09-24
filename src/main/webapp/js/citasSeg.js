@@ -14,8 +14,8 @@ $(document).ready(
         function () {
             $.ajax({
                 type: 'GET',
-                //url: 'http://localhost/proyectoDB2-seguro/restHist/hist/getHist?hospital=2',
-                url: 'http://localhost/proyectoDB2-Hospital1/GetHistSeg',
+                //url: 'http://localhost:8080/proyectoDB2-seguro/restHist/hist/getHist?hospital=2',
+                url: 'http://localhost:8080/proyectoDB2-Hospital1/GetHistSeg',
                 dataType: 'json',
                 success: function (data) {
                     var $pData = $('#historialData2');

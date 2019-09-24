@@ -3,7 +3,7 @@ $(document).ready(
             
             $.ajax({
                 type: 'GET',
-                url: 'http://localhost/proyectoDB2-Hospital1/DocInfo',
+                url: 'http://localhost:8080/proyectoDB2-Hospital1/DocInfo',
                 dataType: 'json',
                 success: function(data) {
                     var $pData = $('#doctoresData');
