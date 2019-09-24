@@ -4,6 +4,9 @@ pipeline {
         maven 'M3'
         jdk 'JDK8'
     }
+    withSonarQubeEnv {
+    SONAR_HOST_URL '192.168.99.100:9000'
+    }
     stages {
         stage('Obtener proyecto de GIT') {
             steps {
