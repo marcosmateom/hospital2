@@ -36,7 +36,7 @@ pipeline {
                 branch 'dev'
             }
             steps{
-                
+                echo 'Esta branch es dev'   
                 deplo == "true"
             }
         }
