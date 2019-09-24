@@ -36,7 +36,6 @@ pipeline {
             steps{
                 echo 'Esta branch es dev'
                 deploy adapters: [tomcat8(credentialsId: 'admintom', path: '', url: 'http://192.168.99.100:8888/')], contextPath: null, war: 'target/proyectoDB2-Hospital1.war'
-                //deplo == "true"
             }
         }
     }
@@ -45,11 +44,7 @@ pipeline {
              echo 'This will always run'  
          }  
          success {  
-             //script {
-               //   if (deplo == "true") {
-                  //  deploy adapters: [tomcat8(credentialsId: 'admintom', path: '', url: 'http://192.168.99.100:8888/')], contextPath: null, war: 'target/proyectoDB2-Hospital1.war'
-                 // }
-                //}
+
              echo 'This will run only if successful' 
          }  
          failure {  
