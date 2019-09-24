@@ -35,7 +35,7 @@ pipeline {
             }
             steps{
                 
-                params.Deploy == 'true'
+                Deployar == 'true'
             }
         }
     }
@@ -45,7 +45,7 @@ pipeline {
          }  
          success {  
              script {
-                  if (params.Deploy == 'true') {
+                  if (Deployar == 'true') {
                     deploy adapters: [tomcat8(credentialsId: 'admintom', path: '', url: 'http://192.168.99.100:8888/')], contextPath: null, war: 'target/proyectoDB2-Hospital1.war'
                   }
                 }
