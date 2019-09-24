@@ -25,10 +25,18 @@ pipeline {
         stage('Examinar con SonarQube') {
             steps {
                 echo 'Estoy en sonar'
+                withSonarQubeEnv('SonarQube') {
                 sh 'mvn sonar:sonar -Dsonar.jdbc.url=jdbc:h2:tcp://192.168.99.100:9000/sonar -Dsonar.host.url=http://192.168.99.100:9000'
-                
+              }    
             }
         }
+        stage("Quality Gate") {
+            steps {
+              timeout(time: 1, unit: 'HOURS') {
+                waitForQualityGate abortPipeline: true
+              }
+            }
+          }   
         stage('deploy if dev'){
             when {
                 branch 'dev'
