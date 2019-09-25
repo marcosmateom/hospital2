@@ -56,14 +56,14 @@ pipeline {
              echo 'This will run only if successful'
              emailext body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}\n More info at: ${env.BUILD_URL}",
                 recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']],
-                subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}"
+                subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}", to 'marroquin161390@unis.edu.gt'
              
          }  
          failure {  
              echo 'This will run only if FAILS'
              emailext body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}\n More info at: ${env.BUILD_URL}",
                 recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']],
-                subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}"
+                subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}", to 'marroquin161390@unis.edu.gt'
          }  
          unstable {  
              echo 'This will run only if the run was marked as unstable'  
