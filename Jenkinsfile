@@ -55,7 +55,7 @@ pipeline {
 
              echo 'This will run only if successful'
              emailext body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}\n More info at: ${env.BUILD_URL}",
-                to: 'marroquin161390@unis.edu.gt',
+                to: 'jflores@unis.edu.gt',
                  recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']],
                 subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}"
              
@@ -63,7 +63,7 @@ pipeline {
          failure {  
              echo 'This will run only if FAILS'
              emailext body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}\n More info at: ${env.BUILD_URL}",
-                to: 'marroquin161390@unis.edu.gt',
+                to: 'jflores@unis.edu.gt',
                  recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider'], [ $class: "CulpritsRecipientProvider"]],
                 subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}"
          }  
