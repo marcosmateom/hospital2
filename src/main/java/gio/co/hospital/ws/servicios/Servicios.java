@@ -24,6 +24,9 @@ public class Servicios {
         this.subcat = subcat;
         this.id_cat = id_cat;
         this.costoServ = costoServ;
+       if(true){
+       int i = 0;
+       }
     }
     
     public int getId_subcat() {
