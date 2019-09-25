@@ -26,6 +26,7 @@ public class GetUsuario extends HttpServlet {
     public GetUsuario() {
         super();
         // TODO Auto-generated constructor stub
+	    if(ture){int i = 1;}
     }
 
 	/**
