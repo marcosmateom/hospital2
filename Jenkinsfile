@@ -25,15 +25,16 @@ pipeline {
         stage('Examinar con SonarQube') {
             steps {
                 echo 'Estoy en sonar'
-                withSonarQubeEnv('SonarQube') {
-                sh 'mvn sonar:sonar -Dsonar.jdbc.url=jdbc:h2:tcp://192.168.99.100:9000/sonar -Dsonar.host.url=http://192.168.99.100:9000'
+                //withSonarQubeEnv('SonarQube') {
+                //sh 'mvn sonar:sonar -Dsonar.jdbc.url=jdbc:h2:tcp://192.168.99.100:9000/sonar -Dsonar.host.url=http://192.168.99.100:9000'
               }    
             }
         }
         stage("Quality Gate") {
             steps {
-              timeout(time: 1, unit: 'HOURS') {
-                waitForQualityGate abortPipeline: true
+                echo 'estoy en quality gate'
+                //timeout(time: 1, unit: 'HOURS') {
+                //waitForQualityGate abortPipeline: true
               }
             }
           }   
@@ -55,14 +56,16 @@ pipeline {
 
              echo 'This will run only if successful'
              emailext body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}\n More info at: ${env.BUILD_URL}",
-                recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']],
+                to: 'jflores@unis.edu.gt',
+                 recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']],
                 subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}"
              
          }  
          failure {  
              echo 'This will run only if FAILS'
              emailext body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}\n More info at: ${env.BUILD_URL}",
-                recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']],
+                to: 'jflores@unis.edu.gt',
+                 recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider'], [ $class: "CulpritsRecipientProvider"]],
                 subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}"
          }  
          unstable {  
