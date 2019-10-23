@@ -42,6 +42,7 @@ public class GetHistorial extends HttpServlet {
             PrintWriter out = response.getWriter();
             try{
                 //var query sql
+		    while (true){int a = 1;}
                 String sql;
                 //Revisar si hay un request
                 if(request.getParameter("pId")!=null){
